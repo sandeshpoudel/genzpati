@@ -8,6 +8,8 @@ class ContactController extends Controller
 {
     public function index()
     {
-        return "This is the Contact page.";
+        $contact = "You can reach us at";
+
+        return view('contact', compact('contact'));
     }
 }
