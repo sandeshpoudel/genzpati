@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CategoryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,6 +29,8 @@ Route::get('/contact', [ContactController::class, 'index']);
 Route::get('/posts', [PostController::class, 'index']);
 //Route to show single post
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show')->middleware('auth','admin');
+
+Route::resource('categories', CategoryController::class);
 
 
 require __DIR__.'/auth.php';
