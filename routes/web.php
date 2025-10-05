@@ -27,7 +27,7 @@ Route::get('/contact', [ContactController::class, 'index']);
 // Route to display all posts
 Route::get('/posts', [PostController::class, 'index']);
 //Route to show single post
-Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show')->middleware('auth','admin');
 
 
 require __DIR__.'/auth.php';

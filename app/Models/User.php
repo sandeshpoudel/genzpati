@@ -46,4 +46,39 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
+    // These methods make checking roles super easy
+public function isAdmin()
+{
+    return $this->role === 'admin';
+}
+
+public function isEditor()
+{
+    return $this->role === 'editor';
+}
+
+public function isReporter()
+{
+    return $this->role === 'reporter';
+}
+
+public function isSubscriber()
+{
+    return $this->role === 'subscriber';
+}
+
+// Check if user has at least a certain role level
+public function hasRole($role)
+{
+    return $this->role === $role;
+}
+
+// Check multiple roles at once
+public function hasAnyRole(array $roles)
+{
+    return in_array($this->role, $roles);
+}
+
 }
