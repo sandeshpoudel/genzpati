@@ -22,6 +22,32 @@ class Article extends Model
         'status',
         'published_at',
     ];
+
+    /**
+     * Scope for published articles
+     */
+    public function scopePublished($query)
+    {
+        return $query->where('status', 'published');
+    }
+
+    /**
+     * Scope for draft articles
+     */
+    public function scopeDraft($query)
+    {
+        return $query->where('status', 'draft');
+    }
+
+    /**
+     * Scope for pending articles
+     */
+    public function scopePending($query)
+    {
+        return $query->where('status', 'pending');
+    }
+
+    
     public function user(){
         return $this->belongsTo(User::class);
     }

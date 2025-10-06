@@ -12,14 +12,38 @@ class ArticleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $articles = Article::where('status', 'published')
-            ->orderBy('published_at')->latest()
-            ->paginate(10);
+   public function index(Request $request)
+{
+    $status = $request->query('status', null);
 
-        return view('article.index', compact('articles'));
+    // Start query
+    $query = Article::query();
+
+    // Role-based filtering
+    $user = auth()->user();
+
+    if ($user->role === 'reporter') {
+        // Reporter sees only their own articles
+        $query->where('user_id', $user->id);
+    } elseif (in_array($user->role, ['user', 'subscriber'])) {
+        // Regular users/subscribers see only published articles
+        $query->where('status', 'published');
     }
+    // Admins and Editors can see all articles
+
+    // Apply status filter if selected (for everyone)
+    if ($status) {
+        $query->where('status', $status);
+    }
+
+    // Latest created articles first
+    $articles = $query->orderBy('created_at', 'desc')
+                      ->paginate(10)
+                      ->withQueryString();
+
+    return view('article.index', compact('articles', 'status'));
+}
+
 
     /**
      * Show the form for creating a new resource.
@@ -51,6 +75,11 @@ class ArticleController extends Controller
 
 
         $validated['user_id'] = auth()->id();
+
+        // Set published_at if status is published
+        if ($validated['status'] === 'published') {
+            $validated['published_at'] = now();
+        }
 
         Article::create($validated);
 
@@ -124,8 +153,28 @@ class ArticleController extends Controller
         // Authorization: only owner or admin
         if (auth()->user()->id !== $article->user_id && auth()->user()->role !== 'admin') {
             abort(403, 'Unauthorized action.');
+        }
+        $article->delete();
+        return redirect()->route('articles.index')->with('success', 'Article Deleted successfully!');
     }
-    $article->delete();
-    return redirect()->route('articles.index')->with('success', 'Article Deleted successfully!');
+
+    public function toggleStatus(Article $article)
+{
+    if (!in_array(auth()->user()->role, ['admin', 'editor'])) {
+        abort(403, 'Unauthorized action.');
+    }
+
+    if ($article->status === 'published') {
+        $article->status = 'draft';
+        $article->published_at = null;
+    } else {
+        $article->status = 'published';
+        $article->published_at = now();
+    }
+
+    $article->save();
+
+    return redirect()->back()->with('success', 'Article status updated successfully!');
 }
+
 }

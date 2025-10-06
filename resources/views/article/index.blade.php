@@ -24,6 +24,19 @@
             </div>
         </div>
     </div>
+    {{-- article filter facility --}}
+    <form method="GET" action="{{ route('articles.index') }}" class="mb-6 flex items-center space-x-2">
+        <label for="status" class="font-medium text-gray-700">Filter by Status:</label>
+        <select name="status" id="status"
+            class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+            <option value="">All</option>
+            <option value="draft" {{ $status == 'draft' ? 'selected' : '' }}>Draft</option>
+            <option value="pending" {{ $status == 'pending' ? 'selected' : '' }}>Pending</option>
+            <option value="published" {{ $status == 'published' ? 'selected' : '' }}>Published</option>
+        </select>
+        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Filter</button>
+    </form>
+    {{-- end of article filter --}}
 
     <div class="max-w-5xl mx-auto py-10 px-4">
         <h1 class="text-3xl font-bold mb-6 text-gray-800">📰 Latest News</h1>
@@ -60,26 +73,47 @@
                         Read More →
                     </a>
 
-                    {{-- Action buttons for the article owner or admin --}}
-                    @if (auth()->check() && (auth()->user()->id === $article->user_id || auth()->user()->role === 'admin'))
-                        <div class="mt-3 flex space-x-2">
-                            {{-- Edit Button --}}
-                            <a href="{{ route('articles.edit', $article->id) }}"
-                                class="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600">
-                                Edit
-                            </a>
+                    @if (auth()->check() && (auth()->user()->id === $article->user_id || in_array(auth()->user()->role, ['admin', 'editor'])))
+    <div class="mt-3 flex space-x-2">
 
-                            {{-- Delete Button --}}
-                            <form action="{{ route('articles.destroy', $article->id) }}" method="POST"
-                                onsubmit="return confirm('Are you sure you want to delete this article?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
-                                    Delete
-                                </button>
-                            </form>
-                        </div>
-                    @endif
+        {{-- Edit Button --}}
+        <a href="{{ route('articles.edit', $article->id) }}"
+            class="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600">
+            Edit
+        </a>
+
+        {{-- Delete Button --}}
+        <form action="{{ route('articles.destroy', $article->id) }}" method="POST"
+            onsubmit="return confirm('Are you sure you want to delete this article?');">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
+                Delete
+            </button>
+        </form>
+
+        {{-- Publish / Unpublish Button --}}
+        @if(in_array(auth()->user()->role, ['admin', 'editor']))
+            <form action="{{ route('articles.toggleStatus', $article->id) }}" method="POST">
+                @csrf
+                @method('PATCH')
+                @if($article->status === 'published')
+                    <button type="submit"
+                        class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
+                        Unpublish
+                    </button>
+                @else
+                    <button type="submit"
+                        class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+                        Publish
+                    </button>
+                @endif
+            </form>
+        @endif
+
+    </div>
+@endif
+
 
                 </div>
             @endforeach

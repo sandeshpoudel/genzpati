@@ -35,4 +35,8 @@ Route::resource('categories', CategoryController::class);
 
 Route::resource('articles', ArticleController::class);
 
+// this route for toggle publish/unpublish
+Route::patch('/articles/{article}/toggle-status', [ArticleController::class, 'toggleStatus'])->name('articles.toggleStatus');
+
+
 require __DIR__.'/auth.php';
