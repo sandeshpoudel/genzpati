@@ -81,4 +81,9 @@ public function hasAnyRole(array $roles)
     return in_array($this->role, $roles);
 }
 
+public function article()
+{
+    return $this->hasMany(Article::class);      
+}
+
 }

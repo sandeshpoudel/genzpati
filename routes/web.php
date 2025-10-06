@@ -7,6 +7,7 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ArticleController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,5 +33,6 @@ Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show')
 
 Route::resource('categories', CategoryController::class);
 
+Route::resource('articles', ArticleController::class);
 
 require __DIR__.'/auth.php';
