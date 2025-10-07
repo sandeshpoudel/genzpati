@@ -8,9 +8,12 @@
     <div class="py-12 bg-gray-50">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
             <article class="bg-white overflow-hidden shadow-lg sm:rounded-xl">
-                @if ($article->featured_image)
-                    <img src="{{ $article->featured_image }}" alt="{{ $article->title }}" class="w-full h-96 object-cover">
-                @endif
+                
+                {{-- feature image section for single page  --}}
+                    <img src="{{ article_image_url($article->featured_image) }}" 
+                        alt="{{ $article->title }}" 
+                        class="w-full h-64 object-cover rounded-xl mb-4">
+                {{-- end of featured image section --}}
 
                 <div class="p-8">
                     <h1 class="text-4xl font-extrabold text-gray-900 mb-4">

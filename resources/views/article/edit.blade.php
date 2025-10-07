@@ -79,15 +79,20 @@
                             </select>
                         </div>
 
-                        {{-- Image --}}
+                        {{-- featured image --}}
                         <div class="mb-4">
-                            <label for="image" class="block text-sm font-medium text-gray-700">Upload Image</label>
-                            <input type="file" name="image" id="image"
+                            <label for="featured_image" class="block text-sm font-medium text-gray-700">Upload Featured
+                                Image</label>
+                            <input type="file" name="featured_image" id="featured_image"
                                 class="mt-1 block w-full text-sm text-gray-500 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+
                             @if($article->featured_image)
-                                <img src="{{ $article->featured_image }}" alt="Current Image" class="mt-2 w-48 h-32 object-cover rounded">
+                            <img src="{{ article_image_url($article->featured_image) }}" 
+                                alt="{{ $article->title }}" 
+                                class="w-full h-64 object-cover rounded-xl mb-4">
                             @endif
                         </div>
+                        {{-- end of featured image --}}
 
                         {{-- Buttons --}}
                         <div class="flex justify-end space-x-2">

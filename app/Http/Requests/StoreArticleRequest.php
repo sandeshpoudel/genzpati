@@ -10,12 +10,11 @@ class StoreArticleRequest extends FormRequest
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
-    {
+        {
         // if user is logged in, allow to create article
-            if (auth()->check()) {
-                return true;
-            }
-    }
+            return auth()->check();
+        }
+    
 
     /**
      * Get the validation rules that apply to the request.
@@ -29,6 +28,7 @@ class StoreArticleRequest extends FormRequest
             'content' => 'required|string',
             'category_id' => 'required|exists:categories,id',
             'status' => 'required|in:draft,pending,published',
+            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', //restrict file size to 2MB
         ];
     }
 }

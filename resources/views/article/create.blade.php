@@ -32,8 +32,7 @@
                         <div class="mb-4">
                             <label for="slug" class="block text-sm font-medium text-gray-700">Slug</label>
                             <input type="text" name="slug" id="slug" value="{{ old('slug') }}"
-                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                                >
+                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
                         </div>
 
                         <div class="mb-4">
@@ -68,28 +67,31 @@
                             </select>
                         </div>
 
+                        {{-- featured image --}}
                         <div class="mb-4">
-                            <label for="image" class="block text-sm font-medium text-gray-700">Upload Image</label>
-                            <input type="file" name="image" id="image"
+                            <label for="featured_image" class="block text-sm font-medium text-gray-700">Upload Featured
+                                Image</label>
+                            <input type="file" name="featured_image" id="featured_image"
                                 class="mt-1 block w-full text-sm text-gray-500 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
 
+                        </div>
+                        {{-- end of featured image --}}
 
                         <div class="flex justify-end space-x-2">
-                             {{-- button to return to article page --}}
-                        
+                            {{-- button to return to article page --}}
+
                             <a href="{{ route('articles.index') }}"
-                               class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:ring-4 focus:ring-gray-300">
+                                class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:ring-4 focus:ring-gray-300">
                                 Back to Articles
                             </a>
-                        
+
 
                             <button type="submit"
                                 class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300">
                                 Publish Article
                             </button>
                         </div>
-                       
+
                     </form>
                 </div>
             </div>

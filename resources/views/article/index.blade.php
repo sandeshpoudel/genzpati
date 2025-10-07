@@ -50,10 +50,12 @@
 
             @foreach ($articles as $article)
                 <div class="mb-8 border-b pb-6">
-                    @if($article->featured_image)
-                        <img src="{{ $article->featured_image }}" alt="{{ $article->title }}"
+                    {{-- to display featured image --}}
+                        <img src="{{ article_image_url($article->featured_image) }}" 
+                            alt="{{ $article->title }}" 
                             class="w-full h-64 object-cover rounded-xl mb-4">
-                    @endif
+                    {{-- end of featured image --}}
+
 
                     <h2 class="text-2xl font-semibold text-blue-700 hover:underline">
                         <a href="{{ route('articles.show', $article->slug) }}">{{ $article->title }}</a>

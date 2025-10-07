@@ -60,7 +60,13 @@ class ArticleController extends Controller
     public function store(StoreArticleRequest $request)
     {
         $validated = $request->validated();
-
+        
+        // Handle file upload if exists
+        if ($request->hasFile('featured_image')) {
+            $path = $request->file('featured_image')->store('articles', 'public'); // stores in storage/app/public/articles
+            $validated['featured_image'] = $path;
+        }
+        // Generate unique slug
         $slug = \Str::slug($validated['title']);
         // Ensure slug is unique
         $originalSlug = $slug;
@@ -72,8 +78,6 @@ class ArticleController extends Controller
         }
 
         $validated['slug'] = $slug;
-
-
         $validated['user_id'] = auth()->id();
 
         // Set published_at if status is published
@@ -124,6 +128,19 @@ class ArticleController extends Controller
             'status' => 'required|in:draft,pending,published',
             'published_at' => 'nullable|date',
         ]);
+
+            // Handle file upload if exists
+if ($request->hasFile('featured_image')) {
+    // Delete old image if exists
+    if ($article->featured_image && \Storage::disk('public')->exists($article->featured_image)) {
+        \Storage::disk('public')->delete($article->featured_image);
+    }
+
+    $image = $request->file('featured_image');
+    $path = $image->store('articles', 'public');
+    $validated['featured_image'] = $path;
+}
+
 
         // If title has changed, update slug
         if ($validated['title'] !== $article->title) {
