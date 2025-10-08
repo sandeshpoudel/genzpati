@@ -32,7 +32,8 @@
                     </div>
 
                     <div class="prose max-w-none text-gray-800 leading-relaxed text-lg">
-                        {!! nl2br(e($article->content)) !!}
+                        {{-- {!! nl2br(e($article->content)) !!} --}}
+                        {!! $article->content !!}
                     </div>
 
                     <div class="mt-10 flex justify-between items-center border-t pt-6">

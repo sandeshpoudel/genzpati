@@ -59,6 +59,7 @@ class ArticleController extends Controller
      */
     public function store(StoreArticleRequest $request)
     {
+        // dd($request->all());
         $validated = $request->validated();
         
         // Handle file upload if exists
@@ -84,7 +85,6 @@ class ArticleController extends Controller
         if ($validated['status'] === 'published') {
             $validated['published_at'] = now();
         }
-
         Article::create($validated);
 
         return redirect()->route('articles.index')->with('success', 'Article created successfully!');
