@@ -49,8 +49,8 @@
                         <div class="mb-4">
                             <label for="content" class="block text-sm font-medium text-gray-700">Content</label>
                             <textarea name="content" id="content" rows="6"
-                                class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                                required>{{ old('content') }}</textarea>
+                                class="ckeditor mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                >{{ old('content') }}</textarea>
                         </div>
 
                         <div class="mb-4">
@@ -84,17 +84,39 @@
                                 class="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:ring-4 focus:ring-gray-300">
                                 Back to Articles
                             </a>
-
-
                             <button type="submit"
                                 class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300">
                                 Publish Article
                             </button>
                         </div>
-
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </x-app-layout>
+<!-- CKEditor 5 -->
+<script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    let editorInstance;
+
+    ClassicEditor
+        .create(document.querySelector('#content'))
+        .then(editor => {
+            editorInstance = editor;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+    // Handle form submission
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(e) {
+        // Make sure editor data is written back into textarea
+        if (editorInstance) {
+            document.querySelector('#content').value = editorInstance.getData();
+        }
+    });
+});
+</script>
