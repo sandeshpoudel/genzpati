@@ -29,6 +29,8 @@ class StoreArticleRequest extends FormRequest
             'category_id' => 'required|exists:categories,id',
             'status' => 'required|in:draft,pending,published',
             'featured_image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', //restrict file size to 2MB
+            'tags' => 'nullable|string',
+            // 'tags.*' => 'exists:tags,id',
         ];
     }
 }

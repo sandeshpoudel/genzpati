@@ -36,6 +36,22 @@
                         {!! $article->content !!}
                     </div>
 
+                    {{-- show tags --}}
+                    <div class="mt-6">
+                        @if($article->tags->isNotEmpty())
+                            <h3 class="text-sm font-semibold text-gray-600 mb-2">Tags:</h3>
+                            <div class="flex flex-wrap gap-2">
+                                @foreach($article->tags as $tag)
+                                    <span
+                                        class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">
+                                        {{ $tag->name }}
+                                    </span>
+                                @endforeach
+                            </div>
+                        @else
+                            <p class="text-sm text-gray-500">No tags associated with this article.</p>
+                        @endif
+
                     <div class="mt-10 flex justify-between items-center border-t pt-6">
                         <a href="{{ route('articles.index') }}"
                             class="text-blue-600 hover:text-blue-800 font-semibold transition">

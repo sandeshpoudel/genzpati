@@ -93,7 +93,13 @@
                             @endif
                         </div>
                         {{-- end of featured image --}}
-
+                        {{-- Input for tags --}}
+                        <div class="mb-4">
+                            <label for="tags" class="block text-sm font-medium text-gray-700">Tags (comma separated)</label>
+                            <input type="text" name="tags" id="tags" value="{{ $article->tags->pluck('name')->implode(', ') }}"
+                                class="mt-1 mb-4 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                placeholder="e.g. Laravel, PHP, Web Development">
+                        {{-- End of tags --}}
                         {{-- Buttons --}}
                         <div class="flex justify-end space-x-2">
                             <a href="{{ route('articles.index') }}"
