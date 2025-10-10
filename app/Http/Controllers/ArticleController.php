@@ -6,6 +6,8 @@ use App\Http\Requests\StoreArticleRequest;
 use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\Tag;
+use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
@@ -85,8 +87,29 @@ class ArticleController extends Controller
         if ($validated['status'] === 'published') {
             $validated['published_at'] = now();
         }
-        Article::create($validated);
+        $article = Article::create($validated);
 
+        //for tags
+        if (!empty($validated['tags'])) {
+        $tagNames = explode(',', $validated['tags']); // split by comma
+        $tagIds = [];
+
+        foreach ($tagNames as $tagName) {
+            $name = trim($tagName);
+            $slug = Str::slug($name);
+
+            // First or create tag (avoid duplicates)
+            $tag = Tag::firstOrCreate(
+                ['slug' => $slug],
+                ['name' => $name]
+            );
+
+            $tagIds[] = $tag->id;
+        }
+
+        // 4️⃣ Attach tags to article
+        $article->tags()->sync($tagIds);
+    }
         return redirect()->route('articles.index')->with('success', 'Article created successfully!');
     }
 
@@ -126,6 +149,9 @@ class ArticleController extends Controller
             'content' => 'required|string',
             'category_id' => 'required|exists:categories,id',
             'status' => 'required|in:draft,pending,published',
+            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'tags' => 'nullable|string',
+            // 'tags.*' => 'exists:tags,id',
             'published_at' => 'nullable|date',
         ]);
 
@@ -140,8 +166,6 @@ if ($request->hasFile('featured_image')) {
     $path = $image->store('articles', 'public');
     $validated['featured_image'] = $path;
 }
-
-
         // If title has changed, update slug
         if ($validated['title'] !== $article->title) {
             $slug = \Str::slug($validated['title']);
@@ -157,6 +181,27 @@ if ($request->hasFile('featured_image')) {
         }
 
         $article->update($validated);
+
+    // ✅ Process tags string (comma separated)
+        if (!empty($validated['tags'])) {
+            $tagNames = array_filter(array_map('trim', explode(',', $validated['tags'])));
+            $tagIds = [];
+
+            foreach ($tagNames as $tagName) {
+                $slug = \Str::slug($tagName);
+                $tag = Tag::firstOrCreate(
+                    ['slug' => $slug],
+                    ['name' => $tagName]
+                );
+                $tagIds[] = $tag->id;
+            }
+
+            $article->tags()->sync($tagIds);
+        } else {
+            // Remove all tags if input empty
+            $article->tags()->detach();
+        }
+    // end of ✅ Process tags string (comma separated)
 
         return redirect()->route('articles.index')->with('success', 'Article updated successfully!');
     }
