@@ -8,10 +8,14 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\PublicController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/', [PublicController::class,'index'])->name('home');
+Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -23,7 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/home', [HomeController::class, 'index']);
+// Route::get('/home', [HomeController::class, 'index']);
 Route::get('/about', [AboutController::class, 'index']);
 Route::get('/contact', [ContactController::class, 'index']);
 // Route to display all posts

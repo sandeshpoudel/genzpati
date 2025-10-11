@@ -5,17 +5,27 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Models\Category;
-class HomeController extends Controller
+
+class PublicController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-       $name = 'Genzpati';
-       $articles = Article::all();
-       $categories = Category::all();
-       return view('home', compact('articles', 'categories'));
+        $categories = Category::all();
+
+        $featured = Article::where("status", 'published')
+        ->latest()
+        ->take(3)
+        ->get();
+
+        $articles = Article::where('status', 'published')
+        ->latest()
+        ->skip(3)
+        ->paginate(9);
+
+        return view('home', compact('articles', 'featured', 'categories'));
     }
 
     /**
