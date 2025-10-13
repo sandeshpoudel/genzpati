@@ -24,19 +24,25 @@
             </div>
         </div>
     </div>
-    {{-- article filter facility --}}
-    <form method="GET" action="{{ route('articles.index') }}" class="mb-6 flex items-center space-x-2">
+  {{-- article filter facility --}}
+<div class="max-w-4xl mx-auto px-4 mb-6">
+    <form method="GET" action="{{ route('articles.index') }}" class="flex flex-wrap items-center gap-3 bg-white p-4 rounded-lg shadow-sm">
         <label for="status" class="font-medium text-gray-700">Filter by Status:</label>
+
         <select name="status" id="status"
-            class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+            class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 px-2 py-1">
             <option value="">All</option>
             <option value="draft" {{ $status == 'draft' ? 'selected' : '' }}>Draft</option>
             <option value="pending" {{ $status == 'pending' ? 'selected' : '' }}>Pending</option>
             <option value="published" {{ $status == 'published' ? 'selected' : '' }}>Published</option>
         </select>
-        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Filter</button>
+
+        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 shadow-md">
+            Filter
+        </button>
     </form>
-    {{-- end of article filter --}}
+</div>
+{{-- end of article filter --}}
 
     <div class="max-w-5xl mx-auto py-10 px-4">
         <h1 class="text-3xl font-bold mb-6 text-gray-800">📰 Latest News</h1>
@@ -44,7 +50,7 @@
         {{-- create new article button --}}
         <div class="mb-6">
             <a href="{{ route('articles.create') }}"
-                class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                class="inline-block mb-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
                 + Create New Article
             </a>
 
