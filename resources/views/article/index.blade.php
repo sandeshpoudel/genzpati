@@ -15,7 +15,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    {{-- <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
@@ -23,26 +23,35 @@
                 </div>
             </div>
         </div>
-    </div>
-  {{-- article filter facility --}}
-<div class="max-w-4xl mx-auto px-4 mb-6">
-    <form method="GET" action="{{ route('articles.index') }}" class="flex flex-wrap items-center gap-3 bg-white p-4 rounded-lg shadow-sm">
-        <label for="status" class="font-medium text-gray-700">Filter by Status:</label>
+    </div> --}}
+
+  {{-- Article Filter Facility --}}
+<div class="mt-2 w-full px-4 mb-6">
+    <form method="GET" action="{{ route('articles.index') }}" 
+          class="w-full max-w-4xl mx-auto bg-white p-4 rounded-lg shadow-sm flex flex-col md:flex-row md:items-center md:space-x-4 space-y-3 md:space-y-0">
+
+        <label for="status" class="font-medium text-gray-700 md:flex-shrink-0">
+            Filter by Status:
+        </label>
 
         <select name="status" id="status"
-            class="border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 px-2 py-1">
+            class="flex-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 px-2 py-1">
             <option value="">All</option>
             <option value="draft" {{ $status == 'draft' ? 'selected' : '' }}>Draft</option>
             <option value="pending" {{ $status == 'pending' ? 'selected' : '' }}>Pending</option>
             <option value="published" {{ $status == 'published' ? 'selected' : '' }}>Published</option>
         </select>
 
-        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 shadow-md">
-            Filter
-        </button>
+        <div class="w-full md:w-auto flex justify-center md:justify-start">
+            <button type="submit" 
+                    class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 shadow-md">
+                Filter
+            </button>
+        </div>
     </form>
 </div>
-{{-- end of article filter --}}
+{{-- End of Article Filter --}}
+
 
     <div class="max-w-5xl mx-auto py-10 px-4">
         <h1 class="text-3xl font-bold mb-6 text-gray-800">📰 Latest News</h1>

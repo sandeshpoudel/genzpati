@@ -46,7 +46,7 @@
     @if($article->tags && $article->tags->count())
         <div class="mt-8 flex flex-wrap gap-2">
             @foreach($article->tags as $tag)
-                <a href="{{ route('public.show', $tag->slug) }}" 
+                <a href="{{ route('home', $tag->slug) }}" 
                    class="text-sm bg-gray-100 text-gray-600 px-3 py-1 rounded-full hover:bg-gray-200">
                     #{{ $tag->name }}
                 </a>
@@ -63,10 +63,13 @@
                     <div class="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg transition">
                         <a href="{{ route('public.show', $related->slug) }}">
                             @if($related->featured_image)
-                                <img src="{{ asset('storage/' . $related->featured_image) }}" 
-                                     alt="{{ $related->title }}" 
-                                     class="w-full h-40 object-cover">
+                                <img src="{{ asset('storage/' . $related->featured_image) }}" alt="{{ $article->title }}"
+                                    class="w-full h-40 object-cover">
+                            @else
+                                <img src="{{ asset('images/default-article.jpg') }}" alt="Default Image"
+                                    class="w-full h-40 object-cover opacity-50">
                             @endif
+
                             <div class="p-4">
                                 <h3 class="text-lg font-semibold text-gray-800 line-clamp-2">
                                     {{ $related->title }}
