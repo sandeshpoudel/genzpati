@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -48,9 +49,19 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Category $category)
+    public function show($slug)
     {
-        //
+        // for public display of articles under this category
+        $categories = Category::all();
+
+        $categoryForDisplay = Category::where('slug', $slug)->firstOrFail();
+
+        // Get articles of this category
+        $articles = Article::where('category_id', $categoryForDisplay->id)
+            ->latest()
+            ->paginate(9); // paginate for grid layout
+
+        return view('public.singleCategory', compact('categories', 'articles', 'categoryForDisplay'));
     }
 
     /**

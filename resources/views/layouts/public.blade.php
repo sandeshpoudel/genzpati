@@ -7,7 +7,6 @@
     <title>{{ $title ?? 'GenZ Pati News Portal' }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <!-- In <head> for swiper js-->
-    {{-- <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" /> --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 

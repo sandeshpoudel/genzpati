@@ -66,7 +66,7 @@
                         </div>
 
                         <!-- Read more link -->
-                        <a href="{{ route('posts.show', $article->slug) }}" 
+                        <a href="{{ route('public.show', $article->slug) }}" 
                            class="inline-flex items-center gap-2 mt-4 text-white font-semibold group/link opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <span>Read More</span>
                             <svg class="w-4 h-4 transform group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -255,7 +255,7 @@
 
                     <!-- Title -->
                     <h3 class="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors duration-300">
-                        <a href="{{ route('articles.show', $article->slug) }}" class="hover:underline">
+                        <a href="{{ route('public.show', $article->slug) }}" class="hover:underline">
                             {{ $article->title }}
                         </a>
                     </h3>
@@ -269,7 +269,7 @@
                     <div class="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent mb-4"></div>
 
                     <!-- Read More Link -->
-                    <a href="{{ route('articles.show', $article->slug) }}"
+                    <a href="{{ route('public.show', $article->slug) }}"
                        class="inline-flex items-center gap-2 text-blue-600 font-semibold text-sm group/link hover:gap-3 transition-all duration-300">
                         <span>Read Full Story</span>
                         <svg class="w-4 h-4 transform group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">

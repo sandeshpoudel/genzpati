@@ -47,9 +47,16 @@ class PublicController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($slug)
     {
-        //
+        $article = Article::where('slug', $slug)->firstOrFail();
+        $categories = Category::all();
+        $relatedArticles = Article::where('category_id', $article->category_id)
+            ->where('id', '!=', $article->id)
+            ->latest()
+            ->take(3)
+            ->get();
+        return view('public.singlearticle', compact('article', 'categories','relatedArticles'));
     }
 
     /**

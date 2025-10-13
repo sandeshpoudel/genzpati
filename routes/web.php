@@ -2,19 +2,11 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\AboutController;
-use App\Http\Controllers\ContactController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\PublicController;
+use App\Http\Controllers\{AboutController, ContactController, CategoryController, PublicController, ArticleController};
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
+//public routes
 Route::get('/', [PublicController::class,'index'])->name('home');
+Route::get('/article/{slug}', [PublicController::class, 'show'])->name('public.show');
 Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');
 
 Route::get('/dashboard', function () {
@@ -27,20 +19,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Route::get('/home', [HomeController::class, 'index']);
 Route::get('/about', [AboutController::class, 'index']);
 Route::get('/contact', [ContactController::class, 'index']);
-// Route to display all posts
-Route::get('/posts', [PostController::class, 'index']);
-//Route to show single post
-Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show')->middleware('auth','admin');
 
-Route::resource('categories', CategoryController::class);
-
-Route::resource('articles', ArticleController::class);
-
-// this route for toggle publish/unpublish
-Route::patch('/articles/{article}/toggle-status', [ArticleController::class, 'toggleStatus'])->name('articles.toggleStatus');
-
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::resource('categories', CategoryController::class);
+    Route::resource('articles', ArticleController::class);
+    // this route for toggle publish/unpublish
+    Route::patch('/articles/{article}/toggle-status', [ArticleController::class, 'toggleStatus'])->name('articles.toggleStatus');
+});
 
 require __DIR__.'/auth.php';
