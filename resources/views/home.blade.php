@@ -37,10 +37,10 @@
                     <img src="{{ asset('storage/' . $article->featured_image) }}"
                          alt="{{ $article->title }}"
                          class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
-                    
+
                     <!-- Gradient overlay -->
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-80"></div>
-                    
+
                     <!-- Content overlay -->
                     <div class="absolute bottom-0 left-0 right-0 p-8 transform translate-y-0 transition-transform duration-500">
                         <!-- Category badge -->
@@ -49,12 +49,12 @@
                                 {{ $article->category->name ?? 'Uncategorized' }}
                             </span>
                         </div>
-                        
+
                         <!-- Title -->
                         <h2 class="text-3xl md:text-4xl font-bold text-white mb-3 leading-tight transform group-hover:translate-x-2 transition-transform duration-300">
                             {{ $article->title }}
                         </h2>
-                        
+
                         <!-- Meta info -->
                         <div class="flex items-center gap-4 text-gray-300">
                             <div class="flex items-center gap-2">
@@ -66,7 +66,7 @@
                         </div>
 
                         <!-- Read more link -->
-                        <a href="{{ route('public.show', $article->slug) }}" 
+                        <a href="{{ route('public.show', $article->slug) }}"
                            class="inline-flex items-center gap-2 mt-4 text-white font-semibold group/link opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             <span>Read More</span>
                             <svg class="w-4 h-4 transform group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -99,7 +99,7 @@
         opacity: 0.4;
         transition: opacity 0.6s ease;
     }
-    
+
     .featuredSwiper .swiper-slide-active {
         opacity: 1;
     }
@@ -207,8 +207,8 @@
                              class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"/>
                     @else
                         <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100">
-                            <img src="{{ asset('images/default-article.jpg') }}" 
-                                 alt="Default Image" 
+                            <img src="{{ asset('images/default-article.jpg') }}"
+                                 alt="Default Image"
                                  class="opacity-50"/>
                             {{-- <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
@@ -218,7 +218,7 @@
 
                     <!-- Gradient Overlay -->
                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    
+
                     <!-- Category Badge -->
                     <div class="absolute top-4 left-4">
                         <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-white/90 backdrop-blur-sm text-gray-900 shadow-lg transform group-hover:scale-105 transition-transform duration-300">
