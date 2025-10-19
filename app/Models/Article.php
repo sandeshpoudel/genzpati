@@ -23,11 +23,6 @@ class Article extends Model
         'published_at',
     ];
 
-    // public function scopeStatus($query, $status)
-    // {
-    //     return $query->where('status', $status);
-    // }
-
     /**
      * Scope for published articles
      */
