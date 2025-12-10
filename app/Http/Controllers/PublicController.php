@@ -2,30 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\Contracts\ArticleRepositoryContract;
 use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Models\Category;
 
 class PublicController extends Controller
 {
+    public function __construct(
+       protected ArticleRepositoryContract $article
+    ) {}
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $categories = Category::all();
+//        $categories = Category::all();
+//
+//        $featured = Article::where("status", 'published')
+//        ->latest()
+//        ->take(3)
+//        ->get();
+//
+//        $articles = Article::where('status', 'published')
+//        ->latest()
+//        ->skip(3)
+//        ->paginate(9);
 
-        $featured = Article::where("status", 'published')
-        ->latest()
-        ->take(3)
-        ->get();
+        // you should skip first three items in here on view file
+        $articles = $this->article->findAll()->paginate(9);
+        $featured = $articles->take(3);
 
-        $articles = Article::where('status', 'published')
-        ->latest()
-        ->skip(3)
-        ->paginate(9);
-
-        return view('home', compact('articles', 'featured', 'categories'));
+        return view('home', compact('articles', 'featured'));
     }
 
     /**
@@ -49,14 +57,21 @@ class PublicController extends Controller
      */
     public function show($slug)
     {
-        $article = Article::where('slug', $slug)->firstOrFail();
-        $categories = Category::all();
-        $relatedArticles = Article::where('category_id', $article->category_id)
-            ->where('id', '!=', $article->id)
-            ->latest()
-            ->take(3)
-            ->get();
-        return view('public.singlearticle', compact('article', 'categories','relatedArticles'));
+//        What the fuck man!!!
+//        $article = Article::where('slug', $slug)->firstOrFail();
+//        $categories = Category::all();
+//        $relatedArticles = Article::where('category_id', $article->category_id)
+//            ->where('id', '!=', $article->id)
+//            ->latest()
+//            ->take(3)
+//            ->get();
+//
+//        return view('public.singlearticle', compact('article', 'categories','relatedArticles'));
+
+
+//        this is how its done
+        $article = $this->article->find($slug);
+        return view('public.singlearticle', compact('article'));
     }
 
     /**

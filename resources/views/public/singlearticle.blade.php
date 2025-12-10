@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="max-w-4xl mx-auto px-4 py-10">
-    
+
     <!-- Breadcrumb -->
     <div class="text-sm text-gray-500 mb-4">
         <a href="{{ url('/') }}" class="hover:underline">Home</a> /
@@ -16,7 +16,7 @@
 
     <!-- Featured Image -->
     @if($article->featured_image)
-        <img src="{{ asset('storage/' . $article->featured_image) }}" 
+        <img src="{{ asset('storage/' . $article->featured_image) }}"
              alt="{{ $article->title }}"
              class="w-full h-auto rounded-xl mb-6 shadow-lg object-cover">
     @endif
@@ -46,7 +46,7 @@
     @if($article->tags && $article->tags->count())
         <div class="mt-8 flex flex-wrap gap-2">
             @foreach($article->tags as $tag)
-                <a href="{{ route('home', $tag->slug) }}" 
+                <a href="{{ route('home', $tag->slug) }}"
                    class="text-sm bg-gray-100 text-gray-600 px-3 py-1 rounded-full hover:bg-gray-200">
                     #{{ $tag->name }}
                 </a>
@@ -55,11 +55,11 @@
     @endif
 
     <!-- Related Articles -->
-    @if(isset($relatedArticles) && $relatedArticles->count())
+    @if(isset($article->category) && $article->category->count())
         <div class="mt-12 border-t border-gray-200 pt-8">
             <h2 class="text-2xl font-semibold mb-5">Related Articles</h2>
             <div class="grid md:grid-cols-3 gap-6">
-                @foreach($relatedArticles as $related)
+                @foreach($article->category->article as $related)
                     <div class="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg transition">
                         <a href="{{ route('public.show', $related->slug) }}">
                             @if($related->featured_image)

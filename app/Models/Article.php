@@ -26,6 +26,7 @@ class Article extends Model
     /**
      * Scope for published articles
      */
+    
     public function scopePublished($query)
     {
         return $query->where('status', 'published');
