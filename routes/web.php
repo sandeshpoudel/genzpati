@@ -2,12 +2,15 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{AboutController, ContactController, CategoryController, PublicController, ArticleController};
+use App\Http\Controllers\{AboutController, ContactController, CategoryController, PublicController, ArticleController, DailyQuestionController};
 
 //public routes
 Route::get('/', [PublicController::class,'index'])->name('home');
 Route::get('/article/{slug}', [PublicController::class, 'show'])->name('public.show');
 Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');
+
+// Daily questions route
+Route::get('/daily-questions', [DailyQuestionController::class, 'index'])->name('daily-questions.index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
