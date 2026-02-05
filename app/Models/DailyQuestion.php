@@ -22,7 +22,7 @@ class DailyQuestion extends Model
     /**
      * Get the questions for this daily set
      */
-    public function questions()
+    public function getQuestions()
     {
         return Question::whereIn('id', $this->question_ids)->get();
     }

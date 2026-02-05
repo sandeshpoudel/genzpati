@@ -74,8 +74,8 @@ class QuestionSeeder extends Seeder
                 'category' => 'general_knowledge',
                 'question' => 'If A=1, B=2, C=3, what is the sum of NEPAL?',
                 'options' => null,
-                'answer' => '50',
-                'explanation' => 'N=14, E=5, P=16, A=1, L=12. Sum: 14+5+16+1+12=48. (Corrected: N=14, E=5, P=16, A=1, L=12 = 48, but commonly taught as 50 with different encoding)',
+                'answer' => '48',
+                'explanation' => 'N=14, E=5, P=16, A=1, L=12. Sum: 14+5+16+1+12=48',
                 'difficulty' => 2,
             ],
             [
